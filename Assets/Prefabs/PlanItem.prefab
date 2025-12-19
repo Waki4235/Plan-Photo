@@ -389,8 +389,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: plan name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c3172f8964c58034c819b2e452b52710, type: 2}
+  m_sharedMaterial: {fileID: 3486391064478197898, guid: c3172f8964c58034c819b2e452b52710, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -654,6 +654,7 @@ MonoBehaviour:
   planNameText: {fileID: 6648517114002559301}
   thumbnailImage: {fileID: 3292056195845305499}
   uploadButton: {fileID: 5350761775009231163}
+  growthManager: {fileID: 0}
 --- !u!114 &2450544721701153436
 MonoBehaviour:
   m_ObjectHideFlags: 0
