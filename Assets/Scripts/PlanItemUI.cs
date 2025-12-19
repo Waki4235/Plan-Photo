@@ -15,11 +15,13 @@ public class PlanItemUI : MonoBehaviour
     public Image thumbnailImage;
 
     [Header("Upload Button (Optional)")]
-    public Button uploadButton;   // PlanItem内の「Upload」ボタンをここに割り当て
+    public Button uploadButton;
+
+    [Header("Growth (Optional)")]
+    [SerializeField] private GrowthManager growthManager;
 
     private string _planName;
 
-    // 初期表示用（既存仕様を壊さない）
     public void Setup(string planName, Sprite thumbnail)
     {
         Debug.Log("PlanItemUI.Setup called: " + planName);
@@ -32,15 +34,16 @@ public class PlanItemUI : MonoBehaviour
         if (thumbnail != null && thumbnailImage != null)
             thumbnailImage.sprite = thumbnail;
 
-        // ボタンが割り当てられている場合だけ有効化
         if (uploadButton != null)
         {
             uploadButton.onClick.RemoveAllListeners();
             uploadButton.onClick.AddListener(OnClickUpload);
         }
+
+        if (growthManager == null)
+            growthManager = FindFirstObjectByType<GrowthManager>();
     }
 
-    // 写真がアップロードされたとき用（既存仕様維持）
     public void SetThumbnail(Sprite thumbnail)
     {
         if (thumbnail != null && thumbnailImage != null)
@@ -50,13 +53,9 @@ public class PlanItemUI : MonoBehaviour
         }
     }
 
-    // ----------------------------
-    // 追加：アップロード機能（SFB不要）
-    // ----------------------------
     private void OnClickUpload()
     {
 #if UNITY_EDITOR
-        // エディタ上だけファイル選択ダイアログが使える（SFB不要）
         string path = EditorUtility.OpenFilePanel("Select photo", "", "png,jpg,jpeg");
 
         if (string.IsNullOrEmpty(path))
@@ -73,6 +72,9 @@ public class PlanItemUI : MonoBehaviour
 
         SetThumbnail(sprite);
         SaveThumbnailPath(path);
+
+        if (growthManager != null)
+            growthManager.NotifyUploaded();
 
         Debug.Log($"Thumbnail updated for plan '{_planName}' : {Path.GetFileName(path)}");
 #else
@@ -118,7 +120,6 @@ public class PlanItemUI : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    // 任意：復元したい場合に呼べる（必要になったらPlanListUI側から呼ぶ）
     public void LoadThumbnailIfSaved()
     {
         if (string.IsNullOrEmpty(_planName)) return;

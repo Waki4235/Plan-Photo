@@ -15,6 +15,7 @@ public class GrowthManager : MonoBehaviour
     private void Awake()
     {
         if (display == null) display = FindFirstObjectByType<GrowthDisplay>();
+        uploadCount = 0;      // ★追加：毎回リセット
         ApplyByCount();
     }
 
